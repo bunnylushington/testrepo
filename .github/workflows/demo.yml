@@ -21,6 +21,9 @@ jobs:
       - name: Display version
         run: echo ${{ steps.version.outputs.version }}
 
+      - name: Display git_id
+        run: echo $GIT_ID
+
       - name: Build image
         run: |
           echo "${{ steps.version.outputs.version }} $GIT_ID" > .version
