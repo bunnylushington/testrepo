@@ -11,7 +11,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
 
-      - name: Bump version and push tag
+      - name: Determine new version/tag
         id: version_dryrun
         uses: mathieudutour/github-tag-action@v6.0
         with:
@@ -23,12 +23,13 @@ jobs:
         run: |
           echo ${{ steps.version_dryrun.outputs.new_tag }} > .version
 
-      - name: Append changelog file
-        id: append_changelog
+      - name: Prepend changelog file
+        id: prepend_changelog
         run: |
-          { echo "${{ steps.version_dryrun.outputs.changelog }}"; \
-            head -500 .changelog.md } > .changelog.md.tmp && \
-            mv .changelog.md.tmp .changelog.md
+           echo "${{ steps.version_dryrun.outputs.changelog }}" \
+             > changelog.md.tmp && \
+           head -500 .changelog.md} >> .changelog.md.tmp && \
+           mv .changelog.md.tmp .changelog.md
 
       - name: Commit and push version/changelog updates
         uses: devops-infra/action-commit-push@master
