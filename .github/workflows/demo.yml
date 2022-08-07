@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Bump version and push tag
-        id: tag_version_dryrun
+        id: version_dryrun
         uses: mathieudutour/github-tag-action@v6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -21,12 +21,12 @@ jobs:
       - name: Add version file to repository
         id: add_version
         run: |
-          echo ${{ steps.tag_version_dryrun.outputs.new_tag }} > .version
+          echo ${{ steps.version_dryrun.outputs.new_tag }} > .version
 
       - name: Append changelog file
         id: append_changelog
         run: |
-          echo "${{ steps.tag_version_dryrun.outputs.changelog }}" >> .changelog
+          echo "${{ steps.version_dryrun.outputs.changelog }}" >> .changelog.md
 
       - name: Commit and push version/changelog updates
         uses: devops-infra/action-commit-push@master
