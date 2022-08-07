@@ -28,7 +28,7 @@ jobs:
         run: |
            echo "${{ steps.version_dryrun.outputs.changelog }}" \
              > changelog.md.tmp && \
-           head -500 .changelog.md} >> .changelog.md.tmp && \
+           head -500 .changelog.md >> .changelog.md.tmp && \
            mv .changelog.md.tmp .changelog.md
 
       - name: Commit and push version/changelog updates
