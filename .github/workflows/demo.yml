@@ -26,7 +26,7 @@ jobs:
       - name: Append changelog file
         id: append_changelog
         run: |
-          echo ${{ steps.tag_version_dryrun.outputs.changelog }} >> .changelog
+          echo "${{ steps.tag_version_dryrun.outputs.changelog }}" >> .changelog
 
       - name: Commit and push version/changelog updates
         uses: devops-infra/action-commit-push@master
